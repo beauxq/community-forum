@@ -1,0 +1,15 @@
+{
+  "name": "community-forum",
+  "version": "1.0.0",
+  "description": "community forum - UMKC Hackathon 2016",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Alanazi, Capps, Hoskisson",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
