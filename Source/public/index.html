@@ -11,9 +11,11 @@
         }
     </style>
 </head>
-<body ng-app="forums">
-    <div ng-controller="forumCtrl">
-        {{message}}
+<body ng-app="forums" ng-cloak>
+    <div ng-controller="forumCtrl" class="container">
+        <div class="row">
+            <h3>{{message}}</h3>
+        </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
