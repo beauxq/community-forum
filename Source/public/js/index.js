@@ -4,6 +4,7 @@
 
 var NEW_POST_URL = "/newpost";
 var GET_POST_URL = "/getpost";
+var REPLY_URL = "/reply";
 
 var app = angular.module("forums", []);
 
@@ -118,7 +119,7 @@ app.controller("newPostCtrl", function ($scope, $http) {
     }
 });
 
-app.controller("viewPostCtrl", function ($scope) {
+app.controller("viewPostCtrl", function ($scope, $http) {
     $scope.$on('openViewPost', function(event, post) {
         console.log("heard openViewPost event, post:");
         console.log(post);
@@ -129,6 +130,15 @@ app.controller("viewPostCtrl", function ($scope) {
     $scope.postReplyClick = function() {
         console.log("post reply click");
         // TODO: make form and post reply
+
+        var dataForPost = {
+            id: $scope.currentPost._id,
+            reply: { body: "reply body text blah blah" }
+        };
+        $http.post(REPLY_URL, dataForPost).then(function(response) {
+            console.log("reply post response:");
+            console.log(response);
+        });
     };
 });
 
@@ -151,6 +161,14 @@ app.controller("forumCtrl", function($scope, $rootScope, dateUtil) {
             body: 'body here\n\nand here',
             author: 'johndoe',
             date: 1478998049074
+        },
+        {
+            "_id": "58288d93172c2817700ca174",
+            "title": "A post that someone can reply to",
+            "body": "here is my body, and here is my spout\ntip me over, and call me a cow",
+            "author": "johndoe",
+            "date": 1479052690823,
+            "replies": []
         }
     ];
 

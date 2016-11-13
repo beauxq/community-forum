@@ -4,6 +4,7 @@
 
 var NEW_POST_URL = "/newpost";
 var GET_POST_URL = "/getpost";
+var REPLY_URL = "/reply";
 var PORT = 9081;
 var StatusEnum = Object.freeze({
     SUCCESS: 200,
@@ -41,6 +42,7 @@ application.post(NEW_POST_URL, function (req, res) {
         post.author = user.username;
         var now = new Date();
         post.date = now.getTime();
+        post.replies = [];
 
         console.log("newpost:");
         console.log(post);
@@ -53,6 +55,36 @@ application.post(NEW_POST_URL, function (req, res) {
             else {
                 res.status(StatusEnum.SERVER_ERROR);
                 res.write("error creating new post");
+                res.end();
+            }
+        });
+    });
+});
+
+/**
+ *  object with "id" string and "reply" object
+ */
+application.post(REPLY_URL, function (req, res) {
+    var id = req.body.id;
+    var reply = req.body.reply;
+    // TODO: check validity of this data
+
+    authentication.getCurrentUser(function (user) {
+        reply.author = user.username;
+        var now = new Date();
+        reply.date = now.getTime();
+
+        console.log("reply:");
+        console.log(reply);
+
+        databaseInterface.replyToPost(id, reply, function (success) {
+            if (success) {
+                res.write("reply success");
+                res.end();
+            }
+            else {
+                res.status(StatusEnum.SERVER_ERROR);
+                res.write("error creating reply");
                 res.end();
             }
         });
@@ -84,7 +116,7 @@ application.use(express.static("public"));
 var server = application.listen(PORT, function() {
     console.log("server listening at http://localhost:%s", PORT);
 
-    testGetOne();
+    // testGetOne();
 });
 
 var testGetOne = function() {

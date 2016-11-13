@@ -28,7 +28,7 @@ exports.newPost = function(post, callback) {
                 return;
             }
 
-            console.log("succesful insert");
+            console.log("successful insert");
             callback(true);
         })
     });
@@ -54,5 +54,53 @@ exports.getPost = function (id, callback) {
             console.log(document);
             callback(document);
         });
+    });
+};
+
+// callback has boolean parameter for success
+exports.replyToPost = function(id, reply, callback) {
+    exports.getPost(id, function(postToReplyTo) {
+        if (! postToReplyTo.hasOwnProperty("replies")) {
+            console.log("error: didn't get post with reply list");
+            console.log(postToReplyTo);
+            callback(false);
+            return;
+        }
+
+        postToReplyTo.replies.push(reply);
+        exports.updatePost(postToReplyTo, function(success) {
+            callback(success);
+        });
+    });
+};
+
+// callback has boolean parameter for success
+exports.updatePost = function (post, callback) {
+    MongoClient.connect(DATABASE_URL, function (err, db) {
+        if (err) {
+            console.log("error connecting to database for post update:");
+            console.log(err);
+            callback(false);
+            return;
+        }
+
+        console.log("before calling updateOne");
+        console.log(post);
+        console.log(typeof post._id);
+
+        var id = post._id;
+        delete post._id;
+
+        db.collection(COLLECTION).updateOne({_id: id}, post, function (err) {
+            if (err) {
+                console.log("error updating post:");
+                console.log(err);
+                callback(false);
+                return;
+            }
+
+            console.log("successful post update");
+            callback(true);
+        })
     });
 };
