@@ -8,6 +8,7 @@ var DATABASE_URL = "mongodb://beauxq:beauxq@ds051873.mlab.com:51873/tut8test";
 var COLLECTION = "hackathon";
 
 var MongoClient = require('mongodb').MongoClient;
+var ObjectID = require('mongodb').ObjectID;
 
 // callback takes boolean parameter = successful post
 exports.newPost = function(post, callback) {
@@ -19,8 +20,6 @@ exports.newPost = function(post, callback) {
             return;
         }
 
-        // TODO: assign an id
-        
         db.collection(COLLECTION).insertOne(post, function (err) {
             if (err) {
                 console.log("error inserting post:");
@@ -44,7 +43,7 @@ exports.getPost = function (id, callback) {
             callback({});
         }
 
-        db.collection(COLLECTION).findOne({'id':id}, function(err, document) {
+        db.collection(COLLECTION).findOne({ "_id": ObjectID(id) }, function(err, document) {
             if (err) {
                 console.log("error in findOne:");
                 console.log(err);

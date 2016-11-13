@@ -83,4 +83,13 @@ application.use(express.static("public"));
 
 var server = application.listen(PORT, function() {
     console.log("server listening at http://localhost:%s", PORT);
+
+    testGetOne();
 });
+
+var testGetOne = function() {
+    databaseInterface.getPost("5827b821d3c13226afdf7744", function(post) {
+        console.log("test getPost:");
+        console.log(post);
+    });
+};
