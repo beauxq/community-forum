@@ -16,7 +16,9 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var cors = require("cors");
 
+// custom modules
 var databaseInterface = require("./dbInterface.js");
+var authentication = require("./authentication.js");
 
 var application = express();
 
@@ -24,22 +26,36 @@ application.use(cors());
 application.use(bodyParser.json());
 application.use(bodyParser.urlencoded({ extended: true }));
 
+var convertDateToStr = function(date) {
+    var toReturn = "";
+    toReturn += date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate() + " " +
+                date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
+    return toReturn;
+};
+
 application.post(NEW_POST_URL, function (req, res) {
     var post = req.body;
+    // TODO: check validity of this data
 
-    console.log("newpost:");
-    console.log(post);
+    authentication.getCurrentUser(function (user) {
+        post.author = user.username;
+        var now = new Date();
+        post.date = now.getTime();
 
-    databaseInterface.newPost(post, function (success) {
-        if (success) {
-            res.write("success");
-            res.end();
-        }
-        else {
-            res.status(StatusEnum.SERVER_ERROR);
-            res.write("error creating new post");
-            res.end();
-        }
+        console.log("newpost:");
+        console.log(post);
+
+        databaseInterface.newPost(post, function (success) {
+            if (success) {
+                res.write("success");
+                res.end();
+            }
+            else {
+                res.status(StatusEnum.SERVER_ERROR);
+                res.write("error creating new post");
+                res.end();
+            }
+        });
     });
 });
 
