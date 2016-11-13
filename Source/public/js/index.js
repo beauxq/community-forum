@@ -92,6 +92,62 @@ app.factory("currentPost", function() {
     };
 });
 
+app.factory("postList", function($http) {
+    // dummy data
+    var _list = [
+        {
+            _id: "5827b821d3c13226afdf7744",
+            title: 'title here',
+            body: 'body here\n\nand here',
+            author: 'johndoe',
+            date: 1478998049074
+        },
+        {
+            _id: "42",
+            title: 'Your Life',
+            body: 'body here\n\nand here',
+            author: 'johndoe',
+            date: 1478998049074
+        },
+        {
+            "_id": "58288d93172c2817700ca174",
+            "title": "A post that someone can reply to",
+            "body": "here is my body, and here is my spout\ntip me over, and call me a cow",
+            "author": "johndoe",
+            "date": 1479052690823,
+            "replies": [
+                {
+                    "body": "reply body text blah blah",
+                    "author": "johndoe",
+                    "date": 1479053159241
+                },
+                {
+                    "body": "now I can reply with ANY text!!!!1!",
+                    "author": "johndoe",
+                    "date": 1479053866964
+                }
+            ]
+        }
+    ];
+
+    var _search_parameters = "";
+    var _page = 1;
+
+    var _putSummariesInList = function() {
+        angular.forEach(_list, function(post) {
+            post.summary = "summary here";  // TODO: get summary from body
+        });
+    };
+
+    return {
+        refresh: function(callback) {
+            // TODO: get list from server
+            _putSummariesInList();
+            callback(_list);
+        }
+    };
+});
+
 app.controller("newPostCtrl", function($scope, $http) {
     $scope.newPostClick = function () {
         console.log("new post click");
@@ -160,46 +216,13 @@ app.controller("viewPostCtrl", function($scope, $http, dateUtil) {
     };
 });
 
-app.controller("forumCtrl", function($scope, $rootScope, dateUtil) {
+app.controller("forumCtrl", function($scope, $rootScope, dateUtil, postList) {
     $scope.getDateString = dateUtil.getDateString;
     $scope.getTimeString = dateUtil.getTimeString;
 
-    // TODO: when this list is brought in, make a summary attribute with part of the body
-    $scope.visiblePosts = [
-        {
-            _id: "5827b821d3c13226afdf7744",
-            title: 'title here',
-            body: 'body here\n\nand here',
-            author: 'johndoe',
-            date: 1478998049074
-        },
-        {
-            _id: "42",
-            title: 'Your Life',
-            body: 'body here\n\nand here',
-            author: 'johndoe',
-            date: 1478998049074
-        },
-        {
-            "_id": "58288d93172c2817700ca174",
-            "title": "A post that someone can reply to",
-            "body": "here is my body, and here is my spout\ntip me over, and call me a cow",
-            "author": "johndoe",
-            "date": 1479052690823,
-            "replies": [
-                {
-                    "body": "reply body text blah blah",
-                    "author": "johndoe",
-                    "date": 1479053159241
-                },
-                {
-                    "body": "now I can reply with ANY text!!!!1!",
-                    "author": "johndoe",
-                    "date": 1479053866964
-                }
-            ]
-        }
-    ];
+    postList.refresh(function(receivedList) {
+        $scope.visiblePosts = receivedList;
+    });
 
     $scope.newPostButtonClick = function() {
         $("#newPostModal").modal("show");
