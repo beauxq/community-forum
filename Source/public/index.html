@@ -58,22 +58,22 @@
                     <h4 class="modal-title" id="viewPostLabel">{{currentPost.title}}</h4>
                 </div>
                 <div class="modal-body">
+                    <div>
+                        author and body and stuff
+                    </div>
+                    <!-- TODO: reply list -->
+                    <div>
+                        list of replies here
+                    </div>
+                    <!-- reply form -->
                     <form role="form">
-                        <div>
-                            author and body and stuff
-                        </div>
-                        <!--div class="form-group">
-                            <input id="newPostTitleInput"
-                                   type="text"
-                                   class="form-control"
-                                   placeholder="Title"
-                                   ng-model="newPostTitle">
+                        <div class="form-group">
                             <textarea class="form-control"
-                                      rows="6"
-                                      id="newPostBodyInput"
-                                      placeholder="Post Body"
-                                      ng-model="newPostBody"></textarea>
-                        </div-->
+                                      rows="3"
+                                      id="newReplyInput"
+                                      placeholder="Reply to this post"
+                                      ng-model="newReply"></textarea>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">

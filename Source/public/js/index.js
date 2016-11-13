@@ -129,15 +129,24 @@ app.controller("viewPostCtrl", function ($scope, $http) {
 
     $scope.postReplyClick = function() {
         console.log("post reply click");
-        // TODO: make form and post reply
+        if (! $scope.newReply) {
+            console.log("blank reply body");
+            return;
+        }
 
         var dataForPost = {
             id: $scope.currentPost._id,
-            reply: { body: "reply body text blah blah" }
+            reply: { body: $scope.newReply }
         };
+
+        // erase form field
+        $scope.newReply = "";
+
         $http.post(REPLY_URL, dataForPost).then(function(response) {
             console.log("reply post response:");
             console.log(response);
+
+            // TODO: reload list of replies from server
         });
     };
 });
