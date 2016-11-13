@@ -34,6 +34,9 @@ var convertDateToStr = function(date) {
     return toReturn;
 };
 
+/**
+ *  object with "title" string and "body" string
+ */
 application.post(NEW_POST_URL, function (req, res) {
     var post = req.body;
     // TODO: check validity of this data

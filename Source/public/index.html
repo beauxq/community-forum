@@ -91,15 +91,18 @@
         </div>
     </div>
 
+    <!-- main page container -->
     <div ng-controller="forumCtrl" class="container">
         <div class="row">
 
             <div class="page-header page-heading">
                 <h1 class="pull-left">Forum</h1>
-                <ol class="breadcrumb pull-right where-am-i">
-                    <li><a href="#" ng-click="searchClick()">Search</a></li>
-                    <li class="active">Forum</li>
-                </ol>
+                <div class="input-group col-sm-4 pull-right">
+                    <input type="text" class="form-control" placeholder="Search for..." ng-model="searchInput">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-click="searchClick()">Search</button>
+                    </span>
+                </div>
                 <div class="clearfix"></div>
             </div>
 
