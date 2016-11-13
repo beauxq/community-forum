@@ -56,23 +56,25 @@
                     <li><a href="#">Forums</a></li>
                     <li class="active">List of topics</li>
                 </ol>
-                <button type="button" class="btn btn-primary" ng-click="newPostButtonClick()">New Post</button>
                 <div class="clearfix"></div>
             </div>
             <div class="alert alert-warning alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Warning! </strong>This is the right place to discuss any ideas, critics, feature requests and all the ideas regarding our website. Please follow the forum rules and always check FAQ before posting to prevent duplicate posts.</p>.
             </div>
+            <div>
+            <button type="button" class="btn btn-primary pull-right" ng-click="newPostButtonClick()">New Post</button>
+            </div>
             <table class="table forum table-striped">
                 <thead>
                 <tr>
                     <th class="cell-stat"></th>
                     <th>
-                        <h3>Category</h3>
+                        <h3>Subjects</h3>
                     </th>
-                    <th class="cell-stat text-center hidden-xs hidden-sm">Topics</th>
-                    <th class="cell-stat text-center hidden-xs hidden-sm">Posts</th>
-                    <th class="cell-stat-2x hidden-xs hidden-sm">Last Post</th>
+                    <th class="cell-stat text-center hidden-xs hidden-sm">Author</th>
+                    <th class="cell-stat text-center hidden-xs hidden-sm">Posted</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -81,18 +83,16 @@
                     <td>
                         <h4><a href="http://community.hrblock.com/t5/Your-Life/bd-p/Your-Life">Your Life</a><br><small>Getting married, changing jobs or having a baby can affect your taxes. Discuss and learn about the tax impact...</small></h4>
                     </td>
-                    <td class="text-center hidden-xs hidden-sm"><a href="#">9 542</a></td>
-                    <td class="text-center hidden-xs hidden-sm"><a href="#">89 897</a></td>
-                    <td class="hidden-xs hidden-sm">by <a href="#">John Doe</a><br><small><i class="fa fa-clock-o"></i> 3 months ago</small></td>
+                    <td class="hidden-xs hidden-sm"><a href="#">John Doe</a></td>
+                    <td class="hidden-xs hidden-sm">11-12-2016<br><small><i class="fa fa-clock-o"></i> 03:49 PM</small></td>
                 </tr>
                 <tr>
-                    <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
+                    <td class="text-center"><i class="fa fa-home fa-2x text-primary"></i></td>
                     <td>
-                        <h4><a href="#">Important changes</a><br><small>Category description</small></h4>
+                        <h4><a href="http://community.hrblock.com/t5/Your-Life/bd-p/Your-Life">Your Life</a><br><small>Getting married, changing jobs or having a baby can affect your taxes. Discuss and learn about the tax impact...</small></h4>
                     </td>
-                    <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                    <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
-                    <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
+                    <td class="hidden-xs hidden-sm"><a href="#">John Doe</a></td>
+                    <td class="hidden-xs hidden-sm">11-12-2016<br><small><i class="fa fa-clock-o"></i> 03:49 PM</small></td>
                 </tr>
                 </tbody>
             </table>
