@@ -6,6 +6,8 @@ var NEW_POST_URL = "/newpost";
 var GET_POST_URL = "/getpost";
 var REPLY_URL = "/reply";
 
+var SUMMARY_LENGTH = 30;
+
 var app = angular.module("forums", []);
 
 app.directive('enterPress', function () {
@@ -130,16 +132,27 @@ app.factory("postList", function($http) {
         }
     ];
 
-    var _search_parameters = "";
+    var _searchParameters = "";  // empty string returns all posts
     var _page = 1;
 
+    var stopIndex;
     var _putSummariesInList = function() {
         angular.forEach(_list, function(post) {
-            post.summary = "summary here";  // TODO: get summary from body
+            stopIndex = post.body.indexOf('\n');
+            if (stopIndex > SUMMARY_LENGTH) {
+                stopIndex = SUMMARY_LENGTH;
+            }
+            post.summary = post.body.substr(0, stopIndex) + "...";
         });
     };
 
     return {
+        setPage: function(n) {
+            _page = n;
+        },
+        setSearchParameters: function(p) {
+            _searchParameters = p;
+        },
         refresh: function(callback) {
             // TODO: get list from server
             _putSummariesInList();
@@ -220,9 +233,16 @@ app.controller("forumCtrl", function($scope, $rootScope, dateUtil, postList) {
     $scope.getDateString = dateUtil.getDateString;
     $scope.getTimeString = dateUtil.getTimeString;
 
-    postList.refresh(function(receivedList) {
-        $scope.visiblePosts = receivedList;
-    });
+    var search = function(page, searchParameters) {
+        postList.setPage(page);
+        postList.setSearchParameters(searchParameters);
+
+        postList.refresh(function(receivedList) {
+            $scope.visiblePosts = receivedList;
+        });
+    };
+    // when page is loaded, list page 1 of all posts
+    search(1, "");
 
     $scope.newPostButtonClick = function() {
         $("#newPostModal").modal("show");
@@ -237,7 +257,13 @@ app.controller("forumCtrl", function($scope, $rootScope, dateUtil, postList) {
     };
 
     $scope.searchClick = function() {
-        console.log("search clicked");
-        // TODO: search
+        console.log("search clicked: " + $scope.searchInput);
+
+        if (! $scope.searchInput) {
+            $scope.searchInput = "";
+            console.log("empty search string - searching all posts");
+        }
+
+        search(1, $scope.searchInput);
     };
 });

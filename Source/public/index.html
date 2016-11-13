@@ -122,7 +122,11 @@
             <div class="page-header page-heading">
                 <h1 class="pull-left">Forum</h1>
                 <div class="input-group col-sm-4 pull-right">
-                    <input type="text" class="form-control" placeholder="Search for..." ng-model="searchInput">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Search for..."
+                           ng-model="searchInput"
+                           enter-press="searchClick()">
                     <span class="input-group-btn">
                         <button class="btn btn-primary" type="button" ng-click="searchClick()">Search</button>
                     </span>
