@@ -7,7 +7,8 @@
     <!--link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"-->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!--link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"-->
 
     <style>
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -36,7 +37,7 @@
                             <textarea class="form-control"
                                       rows="6"
                                       id="newPostBodyInput"
-                                      placeholder="Post Body"
+                                      placeholder="Post body"
                                       ng-model="newPostBody"></textarea>
                         </div>
                     </form>
@@ -56,12 +57,13 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="viewPostLabel">{{currentPost.title}}</h4>
+                    <div>
+                        <small>Author: {{currentPost.author}}<br>Date: {{getDateString(currentPost.date)}}</small>
+                    </div>
                 </div>
                 <div class="modal-body">
                     <!-- TODO: styling -->
                     <div>
-                        <small>Author: {{currentPost.author}}<br>
-                        Date: {{getDateString(currentPost.date)}}</small>
                         <p style="white-space: pre-line;">{{currentPost.body}}</p>
                     </div>
                     <!-- reply list -->
@@ -69,6 +71,9 @@
                         <p style="white-space: pre-line;">{{reply.body}}</p>
                         <small class="pull-right">- {{reply.author}} {{getDateString(reply.date)}}</small>
                     </div>
+
+                </div>
+                <div class="modal-footer">
                     <!-- reply form -->
                     <form role="form">
                         <div class="form-group">
@@ -79,8 +84,6 @@
                                       ng-model="newReply"></textarea>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" ng-click="postReplyClick()">Post Reply</button>
                 </div>
@@ -138,8 +141,10 @@
             </table>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!--script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script-->
+    <script src="js/angular.min.js"></script>
+    <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/index.js"></script>
     <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script-->
     <script src="js/bootstrap.min.js"></script>
