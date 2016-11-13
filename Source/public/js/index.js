@@ -89,11 +89,24 @@ app.controller("newPostCtrl", function ($scope, $http) {
             body: $scope.newPostBody
         };
 
+        // erase form fields
+        $scope.newPostTitle = "";
+        $scope.newPostBody = "";
+
         $http.post(NEW_POST_URL, post).then(function(response) {
             console.log("new post response: ");
             console.log(response);
         });
     }
+});
+
+app.controller("viewPostCtrl", function ($scope) {
+    $scope.currentPost = { title: "post title here" };  // TODO: get from factory
+
+    $scope.postReplyClick = function() {
+        console.log("post reply click");
+        // TODO: make form and post reply
+    };
 });
 
 app.controller("forumCtrl", function($scope, dateUtil) {
@@ -125,6 +138,8 @@ app.controller("forumCtrl", function($scope, dateUtil) {
     $scope.postClick = function(indexClicked) {
         console.log("post clicked at index: " + indexClicked);
         // TODO: show post
+
+        $("#viewPostModal").modal("show");
     };
 
     $scope.searchClick = function() {

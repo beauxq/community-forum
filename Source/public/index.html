@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Forum</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
@@ -48,6 +48,41 @@
         </div>
     </div>
 
+    <!-- modal for viewing an existing post -->
+    <div ng-controller="viewPostCtrl" class="modal fade" id="viewPostModal" tabindex="-1" role="dialog" aria-labelledby="view post">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="viewPostLabel">{{currentPost.title}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div>
+                            author and body and stuff
+                        </div>
+                        <!--div class="form-group">
+                            <input id="newPostTitleInput"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="Title"
+                                   ng-model="newPostTitle">
+                            <textarea class="form-control"
+                                      rows="6"
+                                      id="newPostBodyInput"
+                                      placeholder="Post Body"
+                                      ng-model="newPostBody"></textarea>
+                        </div-->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="postReplyClick()">Post Reply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div ng-controller="forumCtrl" class="container">
         <div class="row">
 
@@ -84,6 +119,7 @@
                 <tbody>
                     <tr ng-repeat="post in visiblePosts track by $index">
                         <td class="text-center"><i class="fa fa-question-circle fa-2x text-primary"></i></td>
+                        <!-- TODO: change icon for resolved -->
                         <td>
                             <h4><a href="#" ng-click="postClick($index)">{{post.title}}</a><br><small>{{post.summary}}</small></h4>
                         </td>
