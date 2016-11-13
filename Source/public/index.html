@@ -50,30 +50,52 @@
         </div>
     </div>
 
-    <!-- modal for viewing an existing post -->
-    <div ng-controller="viewPostCtrl" class="modal fade" id="viewPostModal" tabindex="-1" role="dialog" aria-labelledby="view post">
+   <div ng-controller="viewPostCtrl" class="modal fade" id="viewPostModal" tabindex="-1" role="dialog" aria-labelledby="view post">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="viewPostLabel">{{currentPost.title}}</h4>
-                    <div>
-                        <small>Author: {{currentPost.author}}<br>Date: {{getDateString(currentPost.date)}}</small>
-                    </div>
                 </div>
                 <div class="modal-body">
                     <!-- TODO: styling -->
                     <div>
-                        <p style="white-space: pre-line;">{{currentPost.body}}</p>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>Author: <a href="#">{{currentPost.author}}</a></h4>
+                                <h5><span>Date: {{getDateString(currentPost.date)}}</span></h5>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{currentPost.body}}</p>
+                            </div>
+                                <div class="clearfix"></div>
+                        </div>
                     </div>
                     <!-- reply list -->
-                    <div ng-repeat="reply in currentPost.replies">
-                        <p style="white-space: pre-line;">{{reply.body}}</p>
-                        <small class="pull-right">- {{reply.author}} {{getDateString(reply.date)}}</small>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <span class="glyphicon glyphicon-comment"></span> 
+                                Comments
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="media-list">
+                                <li class="media" ng-repeat="reply in currentPost.replies">
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><a href="#">
+                                            {{reply.author}}</a>
+                                            <br>
+                                            <small>
+                                                {{getDateString(reply.date)}}
+                                            </small>
+                                        </h4>
+                                        <p>{{reply.body}}</p><hr>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-
-                </div>
-                <div class="modal-footer">
                     <!-- reply form -->
                     <form role="form">
                         <div class="form-group">
@@ -84,13 +106,14 @@
                                       ng-model="newReply"></textarea>
                         </div>
                     </form>
+                </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" ng-click="postReplyClick()">Post Reply</button>
                 </div>
             </div>
         </div>
     </div>
-
     <div ng-controller="forumCtrl" class="container">
         <div class="row">
 
