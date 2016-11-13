@@ -60,14 +60,41 @@
                 <div class="modal-body">
                     <!-- TODO: styling -->
                     <div>
-                        <small>Author: {{currentPost.author}}<br>
-                        Date: {{getDateString(currentPost.date)}}</small><br>
-                        {{currentPost.body}}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>Author: <a href="#">{{currentPost.author}}</a></h4>
+                                <h5><span>Date: {{getDateString(currentPost.date)}}</span></h5>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{currentPost.body}}</p>
+                            </div>
+                                <div class="clearfix"></div>
+                        </div>
                     </div>
                     <!-- reply list -->
-                    <div ng-repeat="reply in currentPost.replies">
-                        {{reply.body}}<br>
-                        <small class="pull-right">- {{reply.author}} {{getDateString(reply.date)}}</small>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <span class="glyphicon glyphicon-comment"></span> 
+                                Comments
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="media-list">
+                                <li class="media" ng-repeat="reply in currentPost.replies">
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><a href="#">
+                                            {{reply.author}}</a>
+                                            <br>
+                                            <small>
+                                                {{getDateString(reply.date)}}
+                                            </small>
+                                        </h4>
+                                        <p>{{reply.body}}</p><hr>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <!-- reply form -->
                     <form role="form">
