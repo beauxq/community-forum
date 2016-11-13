@@ -29,6 +29,50 @@ app.run(function ($http) {
     $http.defaults.headers.post['dataType'] = 'json';
 });
 
+app.factory("dateUtil", function() {
+    return {
+        getDateString: function(date) {
+            if ((typeof date) != Date) {
+                date = new Date(date);
+            }
+
+            // return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+            return date.toDateString();
+        },
+        getTimeString: function (date) {
+            if ((typeof date) != Date) {
+                date = new Date(date);
+            }
+
+            var pm = false;
+            var hour = date.getHours();
+            if (hour > 11) {
+                pm = true;
+                if (hour > 12) {
+                    hour -= 12;
+                }
+            }
+            if (hour == 0) {
+                hour = 12;
+            }
+
+            var minute = date.getMinutes();
+            if (minute < 10) {
+                minute = "0" + minute;
+            }
+
+            var toReturn = hour + ":" + minute + " ";
+            if (pm) {
+                toReturn += "PM";
+            } else {
+                toReturn += "AM"
+            }
+
+            return toReturn;
+        }
+    };
+});
+
 app.controller("newPostCtrl", function ($scope, $http) {
     $scope.newPostClick = function () {
         console.log("new post click");
@@ -52,10 +96,39 @@ app.controller("newPostCtrl", function ($scope, $http) {
     }
 });
 
-app.controller("forumCtrl", function($scope) {
-    $scope.message = "cool forumz dood";
+app.controller("forumCtrl", function($scope, dateUtil) {
+    $scope.getDateString = dateUtil.getDateString;
+    $scope.getTimeString = dateUtil.getTimeString;
+
+    // TODO: when this list is brought in, make a summary attribute with part of the body
+    $scope.visiblePosts = [
+        {
+            _id: "5827b821d3c13226afdf7744",
+            title: 'title here',
+            body: 'body here\n\nand here',
+            author: 'johndoe',
+            date: 1478998049074
+        },
+        {
+            _id: "42",
+            title: 'Your Life',
+            body: 'body here\n\nand here',
+            author: 'johndoe',
+            date: 1478998049074
+        }
+    ];
 
     $scope.newPostButtonClick = function() {
         $("#newPostModal").modal("show");
+    };
+
+    $scope.postClick = function(indexClicked) {
+        console.log("post clicked at index: " + indexClicked);
+        // TODO: show post
+    };
+
+    $scope.searchClick = function() {
+        console.log("search clicked");
+        // TODO: search
     };
 });
