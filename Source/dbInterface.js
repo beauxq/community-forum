@@ -105,8 +105,14 @@ exports.updatePost = function (post, callback) {
     });
 };
 
+/**
+ * @param {number} page
+ * @param {string} searchParameters
+ * @param {function} callback - has parameter object with "results" list
+ */
 exports.search = function(page, searchParameters, callback) {
-    var RESULT_COUNT = 20;
+    var RESULT_COUNT = 20;  // TODO: make result count variable
+    // TODO: count total posts, so interface can change pages
 
     MongoClient.connect(DATABASE_URL, function (err, db) {
         if (err) {
@@ -143,10 +149,12 @@ exports.search = function(page, searchParameters, callback) {
             console.log("what to do with that?");
             callback({ results: res });
 
-            // toArray takes time to work - calls this function before it's done - TODO: check if this is a bug in the library
+            /* I've had trouble with toArray before
+            // toArray takes time to work - calls this function before it's done - check if this is a bug in the library
             setTimeout(function () {
 
-            }, 3000);
+            }, 1100);
+            */
         });
     });
 };

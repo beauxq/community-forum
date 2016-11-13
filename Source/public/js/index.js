@@ -96,7 +96,8 @@ app.factory("currentPost", function() {
 });
 
 app.factory("postList", function($http) {
-    // dummy data
+    var _list = [];
+    /*/ dummy data
     var _list = [
         {
             _id: "5827b821d3c13226afdf7744",
@@ -132,6 +133,7 @@ app.factory("postList", function($http) {
             ]
         }
     ];
+    */
 
     var _searchParameters = "";  // empty string returns all posts
     var _page = 1;
@@ -155,21 +157,17 @@ app.factory("postList", function($http) {
             _searchParameters = p;
         },
         refresh: function(callback) {
-            // TODO: get list from server
             var data = {
                 page: _page,
                 searchParameters: _searchParameters
             };
 
+            // get list from server
             $http.post(SEARCH_URL, data).then(function(response) {
                 _list = response.data.results;
                 _putSummariesInList();
                 callback(_list);
             });
-            /*
-            _putSummariesInList();
-            callback(_list);
-            */
         }
     };
 });
