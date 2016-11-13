@@ -61,12 +61,12 @@
                     <!-- TODO: styling -->
                     <div>
                         <small>Author: {{currentPost.author}}<br>
-                        Date: {{getDateString(currentPost.date)}}</small><br>
-                        {{currentPost.body}}
+                        Date: {{getDateString(currentPost.date)}}</small>
+                        <p style="white-space: pre-line;">{{currentPost.body}}</p>
                     </div>
                     <!-- reply list -->
                     <div ng-repeat="reply in currentPost.replies">
-                        {{reply.body}}<br>
+                        <p style="white-space: pre-line;">{{reply.body}}</p>
                         <small class="pull-right">- {{reply.author}} {{getDateString(reply.date)}}</small>
                     </div>
                     <!-- reply form -->
