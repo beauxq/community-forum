@@ -5,6 +5,7 @@
 var NEW_POST_URL = "/newpost";
 var GET_POST_URL = "/getpost";
 var REPLY_URL = "/reply";
+var SEARCH_URL = "/search";
 
 var SUMMARY_LENGTH = 30;
 
@@ -155,8 +156,20 @@ app.factory("postList", function($http) {
         },
         refresh: function(callback) {
             // TODO: get list from server
+            var data = {
+                page: _page,
+                searchParameters: _searchParameters
+            };
+
+            $http.post(SEARCH_URL, data).then(function(response) {
+                _list = response.data.results;
+                _putSummariesInList();
+                callback(_list);
+            });
+            /*
             _putSummariesInList();
             callback(_list);
+            */
         }
     };
 });

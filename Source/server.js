@@ -5,6 +5,8 @@
 var NEW_POST_URL = "/newpost";
 var GET_POST_URL = "/getpost";
 var REPLY_URL = "/reply";
+var SEARCH_URL = "/search";
+
 var PORT = 9081;
 var StatusEnum = Object.freeze({
     SUCCESS: 200,
@@ -109,6 +111,21 @@ application.post(GET_POST_URL, function (req, res) {
 
     console.log("getpost id: " + id);
     databaseInterface.getPost(id, function(result) {
+        res.write(JSON.stringify(result));
+        res.end();
+    });
+});
+
+/**
+ *  object with "page" number and "searchParameters" string
+ */
+application.post(SEARCH_URL, function(req, res) {
+    var searchParameters = req.body.searchParameters;
+    var page = req.body.page;
+    // TODO: verify this data
+
+    console.log("search: " + searchParameters);
+    databaseInterface.search(page, searchParameters, function(result) {
         res.write(JSON.stringify(result));
         res.end();
     });

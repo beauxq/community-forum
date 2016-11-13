@@ -104,3 +104,49 @@ exports.updatePost = function (post, callback) {
         })
     });
 };
+
+exports.search = function(page, searchParameters, callback) {
+    var RESULT_COUNT = 20;
+
+    MongoClient.connect(DATABASE_URL, function (err, db) {
+        if (err) {
+            console.log("error connecting to database for post update:");
+            console.log(err);
+            callback(false);
+            return;
+        }
+
+        var filter;
+        if (searchParameters) {
+            filter = {
+                title: searchParameters
+            };
+        }
+        else {
+            filter = {};
+        }
+        var options = {
+            skip: (page - 1) * RESULT_COUNT,
+            limit: RESULT_COUNT  /* ,  TODO: add fields, only what we need for front page?
+             fields:{b:1} */
+        };
+        console.log("before calling find");
+
+        db.collection(COLLECTION).find(filter, options).toArray(function (err, res) {
+            if (err) {
+                console.log("error from collection.find");
+                callback({ results: [] });
+                return;
+            }
+
+            console.log(res);
+            console.log("what to do with that?");
+            callback({ results: res });
+
+            // toArray takes time to work - calls this function before it's done - TODO: check if this is a bug in the library
+            setTimeout(function () {
+
+            }, 3000);
+        });
+    });
+};
