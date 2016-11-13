@@ -92,7 +92,7 @@ app.factory("currentPost", function() {
     };
 });
 
-app.controller("newPostCtrl", function ($scope, $http) {
+app.controller("newPostCtrl", function($scope, $http) {
     $scope.newPostClick = function () {
         console.log("new post click");
         console.log($scope.newPostTitle);
@@ -119,7 +119,10 @@ app.controller("newPostCtrl", function ($scope, $http) {
     }
 });
 
-app.controller("viewPostCtrl", function ($scope, $http) {
+app.controller("viewPostCtrl", function($scope, $http, dateUtil) {
+    $scope.getDateString = dateUtil.getDateString;
+    $scope.getTimeString = dateUtil.getTimeString;
+
     $scope.$on('openViewPost', function(event, post) {
         console.log("heard openViewPost event, post:");
         console.log(post);
@@ -142,11 +145,17 @@ app.controller("viewPostCtrl", function ($scope, $http) {
         // erase form field
         $scope.newReply = "";
 
+        // call api to post reply
         $http.post(REPLY_URL, dataForPost).then(function(response) {
             console.log("reply post response:");
             console.log(response);
 
-            // TODO: reload list of replies from server
+            // reload list of replies from server
+            $http.post(GET_POST_URL, dataForPost).then(function(response) {
+                console.log("get response:");
+                console.log(response);
+                $scope.currentPost = response.data;
+            });
         });
     };
 });
@@ -177,7 +186,18 @@ app.controller("forumCtrl", function($scope, $rootScope, dateUtil) {
             "body": "here is my body, and here is my spout\ntip me over, and call me a cow",
             "author": "johndoe",
             "date": 1479052690823,
-            "replies": []
+            "replies": [
+                {
+                    "body": "reply body text blah blah",
+                    "author": "johndoe",
+                    "date": 1479053159241
+                },
+                {
+                    "body": "now I can reply with ANY text!!!!1!",
+                    "author": "johndoe",
+                    "date": 1479053866964
+                }
+            ]
         }
     ];
 

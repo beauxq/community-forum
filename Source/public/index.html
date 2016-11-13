@@ -58,12 +58,16 @@
                     <h4 class="modal-title" id="viewPostLabel">{{currentPost.title}}</h4>
                 </div>
                 <div class="modal-body">
+                    <!-- TODO: styling -->
                     <div>
-                        author and body and stuff
+                        <small>Author: {{currentPost.author}}<br>
+                        Date: {{getDateString(currentPost.date)}}</small><br>
+                        {{currentPost.body}}
                     </div>
-                    <!-- TODO: reply list -->
-                    <div>
-                        list of replies here
+                    <!-- reply list -->
+                    <div ng-repeat="reply in currentPost.replies">
+                        {{reply.body}}<br>
+                        <small class="pull-right">- {{reply.author}} {{getDateString(reply.date)}}</small>
                     </div>
                     <!-- reply form -->
                     <form role="form">
