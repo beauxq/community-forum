@@ -73,6 +73,23 @@ app.factory("dateUtil", function() {
     };
 });
 
+app.factory("currentPost", function() {
+    var _currentPost;
+
+    return {
+        get: function() {
+            console.log("getting");
+            console.log(_currentPost);
+            return _currentPost;
+        },
+        set: function(post) {
+            _currentPost = post;
+            console.log("setting");
+            console.log(_currentPost);
+        }
+    };
+});
+
 app.controller("newPostCtrl", function ($scope, $http) {
     $scope.newPostClick = function () {
         console.log("new post click");
@@ -100,8 +117,11 @@ app.controller("newPostCtrl", function ($scope, $http) {
     }
 });
 
-app.controller("viewPostCtrl", function ($scope) {
-    $scope.currentPost = { title: "post title here" };  // TODO: get from factory
+app.controller("viewPostCtrl", function ($scope, currentPost) {
+    $scope.$on('openViewPost', function() {
+        console.log("heard event");
+        $scope.currentPost = currentPost.get();
+    });
 
     $scope.postReplyClick = function() {
         console.log("post reply click");
@@ -109,7 +129,7 @@ app.controller("viewPostCtrl", function ($scope) {
     };
 });
 
-app.controller("forumCtrl", function($scope, dateUtil) {
+app.controller("forumCtrl", function($scope, $rootScope, dateUtil, currentPost) {
     $scope.getDateString = dateUtil.getDateString;
     $scope.getTimeString = dateUtil.getTimeString;
 
@@ -137,8 +157,9 @@ app.controller("forumCtrl", function($scope, dateUtil) {
 
     $scope.postClick = function(indexClicked) {
         console.log("post clicked at index: " + indexClicked);
-        // TODO: show post
 
+        currentPost.set($scope.visiblePosts[indexClicked]);
+        $rootScope.$broadcast('openViewPost', 0);
         $("#viewPostModal").modal("show");
     };
 
