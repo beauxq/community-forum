@@ -156,10 +156,13 @@ app.factory("postList", function($http) {
     var _putSummariesInList = function() {
         angular.forEach(_list, function(post) {
             stopIndex = post.body.indexOf('\n');
-            if (stopIndex > SUMMARY_LENGTH) {
+            if (stopIndex > SUMMARY_LENGTH || stopIndex == -1) {
                 stopIndex = SUMMARY_LENGTH;
             }
-            post.summary = post.body.substr(0, stopIndex) + "...";
+            post.summary = post.body.substr(0, stopIndex);
+            if (post.summary.length != post.body.length) {
+                post.summary += "...";
+            }
         });
     };
 
