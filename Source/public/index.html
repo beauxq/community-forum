@@ -66,9 +66,9 @@
                                 <h5><span>Date: {{getDateString(currentPost.date)}}</span></h5>
                             </div>
                             <div class="panel-body">
-                                <p>{{currentPost.body}}</p>
+                                <p style="white-space: pre-line;">{{currentPost.body}}</p>
                             </div>
-                                <div class="clearfix"></div>
+                            <div class="clearfix"></div>
                         </div>
                     </div>
                     <!-- reply list -->
@@ -90,7 +90,7 @@
                                                 {{getDateString(reply.date)}}
                                             </small>
                                         </h4>
-                                        <p>{{reply.body}}</p><hr>
+                                        <p style="white-space: pre-line;">{{reply.body}}</p><hr>
                                     </div>
                                 </li>
                             </ul>
