@@ -132,6 +132,7 @@ exports.search = function(page, searchParameters, callback) {
             filter = {};
         }
         var options = {
+            sort: [['date', 'desc']],
             skip: (page - 1) * RESULT_COUNT,
             limit: RESULT_COUNT  /* ,  TODO: add fields, only what we need for front page?
              fields:{b:1} */
