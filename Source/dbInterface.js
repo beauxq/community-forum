@@ -145,8 +145,7 @@ exports.search = function(page, searchParameters, callback) {
                 return;
             }
 
-            console.log(res);
-            console.log("what to do with that?");
+            // console.log(res);
             callback({ results: res });
 
             /* I've had trouble with toArray before

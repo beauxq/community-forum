@@ -122,7 +122,7 @@ application.post(GET_POST_URL, function (req, res) {
 application.post(SEARCH_URL, function(req, res) {
     var searchParameters = req.body.searchParameters;
     var page = req.body.page;
-    // TODO: verify this data
+    // TODO: check validity of this data
 
     console.log("search: " + searchParameters);
     databaseInterface.search(page, searchParameters, function(result) {

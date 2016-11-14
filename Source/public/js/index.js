@@ -11,6 +11,9 @@ var SUMMARY_LENGTH = 30;
 
 var app = angular.module("forums", []);
 
+/**
+ *  creates "enter-press" html attribute for listener on text inputs
+ */
 app.directive('enterPress', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
@@ -33,6 +36,9 @@ app.run(function ($http) {
     $http.defaults.headers.post['dataType'] = 'json';
 });
 
+/**
+ *  utility functions for dealing with dates
+ */
 app.factory("dateUtil", function() {
     return {
         getDateString: function(date) {
@@ -95,9 +101,12 @@ app.factory("currentPost", function() {
     };
 });
 
+/**
+ *  gets and manages the list of posts on the main view
+ */
 app.factory("postList", function($http) {
     var _list = [];
-    /*/ dummy data
+    /*/ dummy data for testing without database
     var _list = [
         {
             _id: "5827b821d3c13226afdf7744",
@@ -139,6 +148,11 @@ app.factory("postList", function($http) {
     var _page = 1;
 
     var stopIndex;
+
+    /**
+     * adds a "summary" attribute to every post in the list
+     * @private
+     */
     var _putSummariesInList = function() {
         angular.forEach(_list, function(post) {
             stopIndex = post.body.indexOf('\n');
@@ -172,6 +186,9 @@ app.factory("postList", function($http) {
     };
 });
 
+/**
+ *  controller for the modal to write a new post
+ */
 app.controller("newPostCtrl", function($scope, $http) {
     $scope.newPostClick = function () {
         console.log("new post click");
@@ -192,17 +209,24 @@ app.controller("newPostCtrl", function($scope, $http) {
         $scope.newPostTitle = "";
         $scope.newPostBody = "";
 
+        // send it to the database
         $http.post(NEW_POST_URL, post).then(function(response) {
             console.log("new post response: ");
             console.log(response);
+            // hide modal
+            $("#newPostModal").modal("hide");
         });
     }
 });
 
+/**
+ *  controller for the modal to view a single post
+ */
 app.controller("viewPostCtrl", function($scope, $http, dateUtil) {
     $scope.getDateString = dateUtil.getDateString;
     $scope.getTimeString = dateUtil.getTimeString;
 
+    // this event passes the post that is shown in this modal
     $scope.$on('openViewPost', function(event, post) {
         console.log("heard openViewPost event, post:");
         console.log(post);
@@ -214,9 +238,11 @@ app.controller("viewPostCtrl", function($scope, $http, dateUtil) {
         console.log("post reply click");
         if (! $scope.newReply) {
             console.log("blank reply body");
+            // don't post blank replies
             return;
         }
 
+        // data sent to the API
         var dataForPost = {
             id: $scope.currentPost._id,
             reply: { body: $scope.newReply }
@@ -225,7 +251,7 @@ app.controller("viewPostCtrl", function($scope, $http, dateUtil) {
         // erase form field
         $scope.newReply = "";
 
-        // call api to post reply
+        // call api to post reply to database
         $http.post(REPLY_URL, dataForPost).then(function(response) {
             console.log("reply post response:");
             console.log(response);
@@ -240,6 +266,9 @@ app.controller("viewPostCtrl", function($scope, $http, dateUtil) {
     };
 });
 
+/**
+ *  main view controller
+ */
 app.controller("forumCtrl", function($scope, $rootScope, dateUtil, postList) {
     $scope.getDateString = dateUtil.getDateString;
     $scope.getTimeString = dateUtil.getTimeString;
